@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# Escaneo de WordPress con WPScan
+echo "========================================="
+echo "       Script de Escaneo WPScan"
+echo "========================================="
+
+# Comprobar si WPScan está instalado
+if ! command -v wpscan &> /dev/null
+then
+    echo "Error: WPScan no está instalado. Instalalo con: sudo apt install wpscan"
+    exit 1
+fi
+
+# Solicitar URL
+read -p "Introduce la URL del sitio WordPress (ej: https://ejemplo.com): " sitio
+
+# Opciones de escaneo
+echo "¿Qué tipo de escaneo quieres realizar?"
+echo "1) Escaneo básico de vulnerabilidades"
+echo "2) Escaneo completo (usuarios, plugins, temas, etc)"
+read -p "Selecciona una opción (1 o 2): " opcion
+
+# Archivo de salida
+timestamp=$(date +"%Y%m%d-%H%M%S")
+output="wpscan_result_$timestamp.txt"
+
+case $opcion in
+    1)
+        echo "Iniciando escaneo básico..."
+        wpscan --url "$sitio" --enumerate vp --random-user-agent --disable-tls-checks -o "$output"
+        ;;
+    2)
+        echo "Iniciando escaneo completo..."
+        wpscan --url "$sitio" --enumerate u,vp,vt,cb,dbe --random-user-agent --disable-tls-checks -o "$output"
+        ;;
+    *)
+        echo "Opción inválida."
+        exit 1
+        ;;
+esac
+
+echo "Escaneo terminado. Resultados guardados en $output"
