@@ -14,36 +14,22 @@ echo "        ╚═════╝ ╚══════╝╚═╝  ╚═╝
 echo "                CREADO POR OSVALDO"
 echo "========================================="
 
-# Comprobar si WPScan está instalado
-if ! command -v wpscan &> /dev/null
-then
-    echo "Error: WPScan no está instalado. Instalalo con: sudo apt install wpscan"
-    exit 1
-fi
+# Escaneo de Vulnerabilidades con Nmap
+echo "========================================="
+echo "     Script de Escaneo de Vulnerabilidades"
+echo "========================================="
 
-# Solicitar URL
-read -p "Introduce la URL del sitio WordPress (ej: https://ejemplo.com): " sitio
+# Solicitar IP o rango
+read -p "Introduce la IP o rango de IPs a escanear: " objetivo
 
-# Opciones de escaneo
-echo "¿Qué tipo de escaneo quieres realizar?"
-echo "1) Escaneo básico de vulnerabilidades"
-echo "2) Escaneo completo (usuarios, plugins, temas, etc)"
-read -p "Selecciona una opción (1 o 2): " opcion
-
-# Archivo de salida
+# Nombre de archivo de salida
 timestamp=$(date +"%Y%m%d-%H%M%S")
-output="wpscan_result_$timestamp.txt"
+output="scan_vuln_$timestamp.txt"
 
-case $opcion in
-    1)
-        echo "Iniciando escaneo básico..."
-        wpscan --url "$sitio" --enumerate vp --random-user-agent --disable-tls-checks -o "$output"
-        ;;
-    2)
-        echo "Iniciando escaneo completo..."
-        wpscan --url "$sitio" --enumerate u,vp,vt,cb,dbe --random-user-agent --disable-tls-checks -o "$output"
-        ;;
-    *)
-        echo "Opción inválida."
-        exit 1
-        ;;
+echo "Iniciando escaneo en $objetivo ..."
+echo "Resultado se guardará en $output"
+
+# Comando de nmap para escaneo de vulnerabilidades
+nmap -sV --script vuln -oN "$output" "$objetivo"
+
+echo "Escaneo terminado. Resultados en $output"
