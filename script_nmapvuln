@@ -1,8 +1,17 @@
 #!/bin/bash
 
-# Escaneo de WordPress con WPScan
+#========================================
+#             CREADO POR OSVALDO
+#========================================
+
 echo "========================================="
-echo "       Script de Escaneo WPScan"
+echo "        ██████╗ ███████╗ █████╗ ██╗     ██████╗  ██████╗ "
+echo "       ██╔═══██╗██╔════╝██╔══██╗██║     ██╔══██╗██╔═══██╗"
+echo "       ██║   ██║█████╗  ███████║██║     ██║  ██║██║   ██║"
+echo "       ██║   ██║██╔══╝  ██╔══██║██║     ██║  ██║██║   ██║"
+echo "       ╚██████╔╝███████╗██║  ██║███████╗██████╔╝╚██████╔╝"
+echo "        ╚═════╝ ╚══════╝╚═╝  ╚═╝╚══════╝╚═════╝  ╚═════╝ "
+echo "                CREADO POR OSVALDO"
 echo "========================================="
 
 # Comprobar si WPScan está instalado
@@ -38,6 +47,3 @@ case $opcion in
         echo "Opción inválida."
         exit 1
         ;;
-esac
-
-echo "Escaneo terminado. Resultados guardados en $output"
